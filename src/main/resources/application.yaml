@@ -27,5 +27,10 @@ jwt:
   expiration: 3600
   issuer: geopokrovskiy
 
+api:
+  secret: 1tBvmI2vK64MWfWsRI8IqDYrCibE8oCb
+  key-length: 64
+  iterations: 16
+
 
 

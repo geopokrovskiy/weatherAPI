@@ -16,7 +16,7 @@ import java.util.Date;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class AuthResponseDto {
 
-    private Integer userId;
+    private Long userId;
     private String token;
     private Date issuedAt;
     private Date expiresAt;

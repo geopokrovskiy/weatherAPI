@@ -12,7 +12,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TokenDetails {
-    private Integer userId;
+    private Long userId;
     private String token;
     private Date issuedAt;
     private Date expiresAt;

@@ -15,7 +15,7 @@ import reactor.core.publisher.Mono;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/register")
+@RequestMapping("/api/v1/auth/register")
 public class AuthRestController {
     private final SecurityService securityService;
     private final UserService userService;

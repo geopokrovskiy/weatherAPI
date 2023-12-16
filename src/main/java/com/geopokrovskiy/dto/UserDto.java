@@ -11,10 +11,11 @@ import java.time.LocalDateTime;
 @Data
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class UserDto {
-    private Integer id;
+    private Long id;
     private String username;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+    private String apiKey;
     private Status status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

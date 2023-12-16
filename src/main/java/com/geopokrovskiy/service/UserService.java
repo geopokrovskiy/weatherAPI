@@ -18,13 +18,15 @@ import java.time.LocalDateTime;
 @Data
 @Service
 public class UserService {
-    private UserRepository userRepository;
-    private PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final ApiService apiService;
     public Mono<UserEntity> registerBasicUser(UserEntity user) {
         return userRepository.save(
                 user.toBuilder()
                         .password(passwordEncoder.encode(user.getPassword()))
                         .status(Status.BASIC)
+                        .apiKey(apiService.generateBasicApiKey(user.getUsername()))
                         .createdAt(LocalDateTime.now())
                         .updatedAt(LocalDateTime.now())
                         .build()
@@ -37,6 +39,7 @@ public class UserService {
         return userRepository.save(
                 user.toBuilder()
                         .password(passwordEncoder.encode(user.getPassword()))
+                        .apiKey(apiService.generateSilverApiKey(user.getUsername()))
                         .status(Status.SILVER)
                         .createdAt(LocalDateTime.now())
                         .updatedAt(LocalDateTime.now())
@@ -50,6 +53,7 @@ public class UserService {
         return userRepository.save(
                 user.toBuilder()
                         .password(passwordEncoder.encode(user.getPassword()))
+                        .apiKey(apiService.generateGoldApiKey(user.getUsername()))
                         .status(Status.GOLD)
                         .createdAt(LocalDateTime.now())
                         .updatedAt(LocalDateTime.now())
@@ -58,7 +62,7 @@ public class UserService {
             log.info("IN registerUser - GOLD user: {} created", u);
         });
     }
-    public Mono<UserEntity> getUserById(Integer id){
+    public Mono<UserEntity> getUserById(Long id){
         return this.userRepository.findById(id);
     }
 

@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Table("users")
 public class UserEntity {
     @Id
-    private Integer id;
+    private Long id;
     @Column("username")
     private String username;
     @Column("password")

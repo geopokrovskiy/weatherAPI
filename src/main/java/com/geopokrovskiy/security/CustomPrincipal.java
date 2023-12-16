@@ -10,7 +10,7 @@ import java.security.Principal;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CustomPrincipal implements Principal {
-    private Integer id;
+    private Long id;
     private String username;
     @Override
     public String getName() {
