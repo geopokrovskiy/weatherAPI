@@ -51,6 +51,10 @@ dependencies {
 	testImplementation 'io.projectreactor:reactor-test'
 	testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
 	testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
+
+	//REDIS
+	implementation "org.springframework.data:spring-data-redis:$redisVersion"
+
 }
 
 tasks.named('test') {

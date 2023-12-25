@@ -14,17 +14,12 @@ public class UserAuthenticationBearer {
         Claims claims = verificationResult.claims;
         String subject = claims.getSubject();
 
-        String role = claims.get("role", String.class);
         String username = claims.get("username", String.class);
-
-        List<SimpleGrantedAuthority> authorities = List.of(
-                new SimpleGrantedAuthority(role)
-        );
 
         Long principalId = Long.parseLong(subject);
         CustomPrincipal principal = new CustomPrincipal(principalId, username);
 
         return Mono.justOrEmpty(new UsernamePasswordAuthenticationToken(principal,
-                null, authorities));
+                null));
     }
 }

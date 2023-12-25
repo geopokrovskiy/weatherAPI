@@ -32,5 +32,9 @@ api:
   key-length: 64
   iterations: 16
 
+redis:
+  hostname: localhost
+  port: 6379
+
 
 

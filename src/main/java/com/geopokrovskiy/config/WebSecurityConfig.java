@@ -27,8 +27,8 @@ public class WebSecurityConfig {
 
     private final String[] publicRoutes = {"/api/v1/auth/register/basic",
             "/api/v1/auth/register/silver",
-            "/api/v1/auth/gold",
-            "/api/v1/auth/register/login"
+            "/api/v1/auth/register/gold",
+            "/api/v1/auth/register/login",
     };
 
     @Bean
