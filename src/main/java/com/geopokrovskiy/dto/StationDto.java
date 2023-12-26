@@ -9,7 +9,7 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 
 @Data
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+@JsonNaming(PropertyNamingStrategies.LowerCamelCaseStrategy.class)
 public class StationDto {
     private String code;
     private Double temperature;

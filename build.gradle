@@ -53,8 +53,8 @@ dependencies {
 	testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
 
 	//REDIS
-	implementation "org.springframework.data:spring-data-redis:$redisVersion"
-
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis-reactive
+	implementation "org.springframework.boot:spring-boot-starter-data-redis-reactive:$redisVersion"
 }
 
 tasks.named('test') {

@@ -9,6 +9,7 @@ import org.mapstruct.Mapper;
 public interface StationMapper {
     @InheritInverseConfiguration
     StationDto map(StationEntity stationEntity);
+
     StationEntity map(StationDto stationDto);
 
 }

@@ -29,6 +29,7 @@ public class WebSecurityConfig {
             "/api/v1/auth/register/silver",
             "/api/v1/auth/register/gold",
             "/api/v1/auth/register/login",
+            "/api/v1/stations/addStation"
     };
 
     @Bean

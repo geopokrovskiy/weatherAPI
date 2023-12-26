@@ -11,7 +11,7 @@ import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
-public class StationRedisConfiguration {
+public class StationEntityRedisConfiguration {
     @Bean
     ReactiveRedisOperations<String, StationEntity> redisOperations(ReactiveRedisConnectionFactory factory) {
         Jackson2JsonRedisSerializer<StationEntity> serializer = new Jackson2JsonRedisSerializer<>(StationEntity.class);
