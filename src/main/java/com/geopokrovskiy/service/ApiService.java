@@ -1,5 +1,6 @@
 package com.geopokrovskiy.service;
 
+import com.geopokrovskiy.entity.Status;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -26,18 +27,8 @@ public class ApiService implements IApiService {
 
     @Override
     public String generateBasicApiKey(String username) {
-        byte[] result;
-        String rawKey = username + BASIC;
-        try {
-            result = SecretKeyFactory.getInstance(SECRET_KEY_INSTANCE)
-                    .generateSecret(new PBEKeySpec(rawKey.toCharArray(),
-                            apiKeySecret.getBytes(), iterations, keyLength))
-                    .getEncoded();
-        } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-        return Base64.getEncoder()
-                .encodeToString(result);
+        String rawKey = username + BASIC + apiKeySecret;
+        return Base64.getEncoder().encodeToString(rawKey.getBytes());
     }
 
     @Override
@@ -47,18 +38,8 @@ public class ApiService implements IApiService {
 
     @Override
     public String generateSilverApiKey(String username) {
-        byte[] result;
-        String rawKey = username + SILVER;
-        try {
-            result = SecretKeyFactory.getInstance(SECRET_KEY_INSTANCE)
-                    .generateSecret(new PBEKeySpec(rawKey.toCharArray(),
-                            apiKeySecret.getBytes(), iterations, keyLength))
-                    .getEncoded();
-        } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-        return Base64.getEncoder()
-                .encodeToString(result);
+        String rawKey = username + SILVER + apiKeySecret;
+        return Base64.getEncoder().encodeToString(rawKey.getBytes());
     }
 
     @Override
@@ -68,18 +49,8 @@ public class ApiService implements IApiService {
 
     @Override
     public String generateGoldApiKey(String username) {
-        byte[] result;
-        String rawKey = username + GOLD;
-        try {
-            result = SecretKeyFactory.getInstance(SECRET_KEY_INSTANCE)
-                    .generateSecret(new PBEKeySpec(rawKey.toCharArray(),
-                            apiKeySecret.getBytes(), iterations, keyLength))
-                    .getEncoded();
-        } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-        return Base64.getEncoder()
-                .encodeToString(result);
+        String rawKey = username + GOLD + apiKeySecret;
+        return Base64.getEncoder().encodeToString(rawKey.getBytes());
     }
 
     @Override
@@ -104,22 +75,16 @@ public class ApiService implements IApiService {
 
     @Override
     public Object[] restoreUsernameAndSubscription(String apiKey) {
-        byte[] apiKeyBytes = Base64.getDecoder().decode(apiKey);
-        char[] apiKeyChars = new String(apiKeyBytes, StandardCharsets.UTF_8).toCharArray();
-        try {
-            PBEKeySpec keySpec = new PBEKeySpec(apiKeyChars, apiKeySecret.getBytes(), iterations, keyLength);
-            byte[] passwordChars = SecretKeyFactory.getInstance(SECRET_KEY_INSTANCE).generateSecret(keySpec).getEncoded();
-            String rawKey = new String(passwordChars);
-            if (rawKey.endsWith("BASIC")) {
-                return new Object[]{rawKey.substring(0, rawKey.length() - BASIC.length()), BASIC};
-            } else if (rawKey.endsWith("SILVER")) {
-                return new Object[]{rawKey.substring(0, rawKey.length() - SILVER.length()), SILVER};
-            } else if (rawKey.endsWith("GOLD")) {
-                return new Object[]{rawKey.substring(0, rawKey.length() - GOLD.length()), GOLD};
-            } else return new Object[] {null, null};
-        } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
+        byte[] decodedKey = Base64.getDecoder().decode(apiKey);
+        String rawKey = new String(decodedKey);
+        String usernameAndSubscription = rawKey.substring(0, rawKey.length() - apiKeySecret.length());
+        if (usernameAndSubscription.endsWith("BASIC")) {
+            return new Object[]{usernameAndSubscription.substring(0, usernameAndSubscription.length() - BASIC.length()), Status.BASIC};
+        } else if (usernameAndSubscription.endsWith("SILVER")) {
+            return new Object[]{usernameAndSubscription.substring(0, usernameAndSubscription.length() - SILVER.length()), Status.SILVER};
+        } else if (usernameAndSubscription.endsWith("GOLD")) {
+            return new Object[]{usernameAndSubscription.substring(0, usernameAndSubscription.length() - GOLD.length()), Status.GOLD};
+        } else return new Object[] {null, null};
     }
 
 }

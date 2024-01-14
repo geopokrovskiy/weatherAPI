@@ -19,8 +19,8 @@ import reactor.core.publisher.Mono;
 @AllArgsConstructor
 public class ApiKeyWebFilter implements WebFilter {
     private final String apiKeyHeader = "X-API-Key";
-    private final ApiRateLimiter rateLimiter = new ApiRateLimiter();
-    private final IApiService apiService = new ApiService();
+    private final ApiRateLimiter rateLimiter;
+    private final ApiService apiService;
     private final PathPatternParser pathPatternParser = new PathPatternParser();
 
     @Override
@@ -35,7 +35,6 @@ public class ApiKeyWebFilter implements WebFilter {
                 return Mono.empty();
             }
         }
-
         return chain.filter(exchange);
     }
 

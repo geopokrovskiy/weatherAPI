@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS users
     username   VARCHAR(64)           NOT NULL UNIQUE,
     password   VARCHAR(64)           NOT NULL,
     status     VARCHAR(16)           NOT NULL,
-    api_key    VARCHAR(64) UNIQUE,
+    api_key    VARCHAR(128) UNIQUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS forecasts
 
 CREATE TABLE IF NOT EXISTS stations
 (
-    id   VARCHAR PRIMARY KEY NOT NULL,
+    id   VARCHAR(128) PRIMARY KEY NOT NULL,
     city VARCHAR(64)         NOT NULL
 );
 

@@ -3,16 +3,12 @@ package com.geopokrovskiy.ratelimiter;
 import com.geopokrovskiy.entity.Status;
 import com.geopokrovskiy.exception.ApiKeyException;
 import com.geopokrovskiy.exception.ErrorCodes;
-import com.geopokrovskiy.service.ApiService;
-import com.geopokrovskiy.service.IApiService;
 import io.github.bucket4j.Bandwidth;
 import io.github.bucket4j.Bucket;
 import io.github.bucket4j.ConsumptionProbe;
 import io.github.bucket4j.local.LocalBucketBuilder;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
@@ -24,6 +20,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @AllArgsConstructor
 public class ApiRateLimiter {
     private final Map<String, Bucket> buckets = new ConcurrentHashMap<>();
+
     private Bucket createBucket(Status status) {
         if (status == null) throw new ApiKeyException("Incorrect API Key", ErrorCodes.INCORRECT_API_KEY);
         LocalBucketBuilder builder = new LocalBucketBuilder();
