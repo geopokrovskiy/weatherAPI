@@ -13,15 +13,15 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.security.core.userdetails.User;
 
 @Configuration
-public class StationEntityRedisConfiguration {
+public class UserEntityRedisConfiguration {
     @Bean
-    ReactiveRedisOperations<String, StationEntity> redisStationOperations(ReactiveRedisConnectionFactory factory) {
-        Jackson2JsonRedisSerializer<StationEntity> serializer = new Jackson2JsonRedisSerializer<>(StationEntity.class);
+    ReactiveRedisOperations<String, UserEntity> redisUserOperations(ReactiveRedisConnectionFactory factory) {
+        Jackson2JsonRedisSerializer<UserEntity> serializer = new Jackson2JsonRedisSerializer<>(UserEntity.class);
 
-        RedisSerializationContext.RedisSerializationContextBuilder<String, StationEntity> builder =
+        RedisSerializationContext.RedisSerializationContextBuilder<String, UserEntity> builder =
                 RedisSerializationContext.newSerializationContext(new StringRedisSerializer());
 
-        RedisSerializationContext<String, StationEntity> context = builder.value(serializer).build();
+        RedisSerializationContext<String, UserEntity> context = builder.value(serializer).build();
 
         return new ReactiveRedisTemplate<>(factory, context);
     }

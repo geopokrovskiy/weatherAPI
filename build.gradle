@@ -55,6 +55,11 @@ dependencies {
 	//REDIS
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis-reactive
 	implementation "org.springframework.boot:spring-boot-starter-data-redis-reactive:$redisVersion"
+
+	//API-key RATE LIMITER
+	// https://mvnrepository.com/artifact/com.github.vladimir-bukhtoyarov/bucket4j-core
+	implementation group: 'com.github.vladimir-bukhtoyarov', name: 'bucket4j-core', version: '7.6.0'
+
 }
 
 tasks.named('test') {

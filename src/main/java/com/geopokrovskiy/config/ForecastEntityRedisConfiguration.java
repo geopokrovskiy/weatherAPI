@@ -1,7 +1,6 @@
 package com.geopokrovskiy.config;
 
-import com.geopokrovskiy.entity.StationEntity;
-import com.geopokrovskiy.entity.UserEntity;
+import com.geopokrovskiy.entity.ForecastEntity;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.ReactiveRedisConnectionFactory;
@@ -10,18 +9,17 @@ import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import org.springframework.security.core.userdetails.User;
 
 @Configuration
-public class StationEntityRedisConfiguration {
+public class ForecastEntityRedisConfiguration {
     @Bean
-    ReactiveRedisOperations<String, StationEntity> redisStationOperations(ReactiveRedisConnectionFactory factory) {
-        Jackson2JsonRedisSerializer<StationEntity> serializer = new Jackson2JsonRedisSerializer<>(StationEntity.class);
+    ReactiveRedisOperations<String, ForecastEntity> redisForecastOperations(ReactiveRedisConnectionFactory factory) {
+        Jackson2JsonRedisSerializer<ForecastEntity> serializer = new Jackson2JsonRedisSerializer<>(ForecastEntity.class);
 
-        RedisSerializationContext.RedisSerializationContextBuilder<String, StationEntity> builder =
+        RedisSerializationContext.RedisSerializationContextBuilder<String, ForecastEntity> builder =
                 RedisSerializationContext.newSerializationContext(new StringRedisSerializer());
 
-        RedisSerializationContext<String, StationEntity> context = builder.value(serializer).build();
+        RedisSerializationContext<String, ForecastEntity> context = builder.value(serializer).build();
 
         return new ReactiveRedisTemplate<>(factory, context);
     }
