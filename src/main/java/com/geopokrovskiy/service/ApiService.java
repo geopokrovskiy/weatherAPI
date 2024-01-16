@@ -1,6 +1,9 @@
 package com.geopokrovskiy.service;
 
 import com.geopokrovskiy.entity.Status;
+import com.geopokrovskiy.exception.ApiException;
+import com.geopokrovskiy.exception.ApiKeyException;
+import com.geopokrovskiy.exception.ErrorCodes;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -75,16 +78,20 @@ public class ApiService implements IApiService {
 
     @Override
     public Object[] restoreUsernameAndSubscription(String apiKey) {
-        byte[] decodedKey = Base64.getDecoder().decode(apiKey);
-        String rawKey = new String(decodedKey);
-        String usernameAndSubscription = rawKey.substring(0, rawKey.length() - apiKeySecret.length());
-        if (usernameAndSubscription.endsWith("BASIC")) {
-            return new Object[]{usernameAndSubscription.substring(0, usernameAndSubscription.length() - BASIC.length()), Status.BASIC};
-        } else if (usernameAndSubscription.endsWith("SILVER")) {
-            return new Object[]{usernameAndSubscription.substring(0, usernameAndSubscription.length() - SILVER.length()), Status.SILVER};
-        } else if (usernameAndSubscription.endsWith("GOLD")) {
-            return new Object[]{usernameAndSubscription.substring(0, usernameAndSubscription.length() - GOLD.length()), Status.GOLD};
-        } else return new Object[] {null, null};
+        try {
+            byte[] decodedKey = Base64.getDecoder().decode(apiKey);
+            String rawKey = new String(decodedKey);
+            String usernameAndSubscription = rawKey.substring(0, rawKey.length() - apiKeySecret.length());
+            if (usernameAndSubscription.endsWith("BASIC")) {
+                return new Object[]{usernameAndSubscription.substring(0, usernameAndSubscription.length() - BASIC.length()), Status.BASIC};
+            } else if (usernameAndSubscription.endsWith("SILVER")) {
+                return new Object[]{usernameAndSubscription.substring(0, usernameAndSubscription.length() - SILVER.length()), Status.SILVER};
+            } else if (usernameAndSubscription.endsWith("GOLD")) {
+                return new Object[]{usernameAndSubscription.substring(0, usernameAndSubscription.length() - GOLD.length()), Status.GOLD};
+            } else return new Object[]{null, null};
+        } catch (Throwable e){
+            throw new ApiKeyException("Incorrect API Key", ErrorCodes.INCORRECT_API_KEY);
+        }
     }
 
 }

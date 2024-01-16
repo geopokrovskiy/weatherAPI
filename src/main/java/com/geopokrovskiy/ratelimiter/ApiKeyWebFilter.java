@@ -1,6 +1,7 @@
 package com.geopokrovskiy.ratelimiter;
 
 import com.geopokrovskiy.entity.Status;
+import com.geopokrovskiy.exception.ApiException;
 import com.geopokrovskiy.service.ApiService;
 import com.geopokrovskiy.service.IApiService;
 import lombok.AllArgsConstructor;

@@ -22,14 +22,13 @@ public class ApiRateLimiter {
     private final Map<String, Bucket> buckets = new ConcurrentHashMap<>();
 
     private Bucket createBucket(Status status) {
-        if (status == null) throw new ApiKeyException("Incorrect API Key", ErrorCodes.INCORRECT_API_KEY);
         LocalBucketBuilder builder = new LocalBucketBuilder();
         Bandwidth bandwidth;
         if (status.equals(Status.BASIC)) {
-            bandwidth = Bandwidth.simple(10, Duration.ofMinutes(1));
+            bandwidth = Bandwidth.simple(1, Duration.ofMinutes(1));
             builder.addLimit(bandwidth);
         } else if (status.equals(Status.SILVER)) {
-            bandwidth = Bandwidth.simple(20, Duration.ofMinutes(1));
+            bandwidth = Bandwidth.simple(10, Duration.ofMinutes(1));
             builder.addLimit(bandwidth);
         } else if (status.equals(Status.GOLD)) {
             bandwidth = Bandwidth.simple(30, Duration.ofMinutes(1));
