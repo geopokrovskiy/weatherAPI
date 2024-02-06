@@ -7,9 +7,9 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface StationMapper {
+    @InheritInverseConfiguration
     StationDto map(StationEntity stationEntity);
 
-    @InheritInverseConfiguration
     StationEntity map(StationDto stationDto);
 
 }

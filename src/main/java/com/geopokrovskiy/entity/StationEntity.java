@@ -15,10 +15,8 @@ import java.util.List;
 @Table("stations")
 public class StationEntity {
     @Id
+    private Integer id;
     private String code;
     private String city;
-    @Transient
-    @ToString.Exclude
-    private List<ForecastEntity> forecasts;
 
 }

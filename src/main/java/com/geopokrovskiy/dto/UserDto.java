@@ -19,4 +19,5 @@ public class UserDto {
     private Status status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private boolean isBlocked;
 }

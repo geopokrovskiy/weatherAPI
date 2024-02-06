@@ -8,11 +8,14 @@ import com.geopokrovskiy.entity.Precipitations;
 import com.geopokrovskiy.entity.StationEntity;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 @JsonNaming(PropertyNamingStrategies.LowerCamelCaseStrategy.class)
 public class ForecastDto {
     private Integer id;
     private StationEntity station;
+    private LocalDateTime time;
     private Double temperature;
     private Precipitations precipitations;
     private Integer windSpeed;

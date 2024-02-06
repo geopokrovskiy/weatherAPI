@@ -1,25 +1,29 @@
 package com.geopokrovskiy.service;
 
+import com.geopokrovskiy.entity.ForecastEntity;
 import com.geopokrovskiy.entity.StationEntity;
+import com.geopokrovskiy.repository.StationRedisRepository;
+import com.geopokrovskiy.repository.StationRepository;
+import com.geopokrovskiy.utils.RandomForecastGenerator;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.connection.ReactiveRedisConnectionFactory;
-import org.springframework.data.redis.core.ReactiveRedisOperations;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
-@Component
-@RequiredArgsConstructor
+@Service
 @Data
 @Slf4j
 public class StationService {
-    private final ReactiveRedisConnectionFactory factory;
-    private final ReactiveRedisOperations<String, StationEntity> stationOps;
+    private final StationRepository stationRepository;
+    private final StationRedisRepository stationRedisRepository;
+    private final ForecastService forecastService;
 
     public Mono<StationEntity> addStation(StationEntity stationEntity) {
-        return stationOps.opsForValue()
-                .set(stationEntity.getCode(), stationEntity)
-                .mapNotNull(success -> success ? stationEntity : null);
+        return stationRepository.save(stationEntity).flatMap(savedStation ->
+                forecastService.addForecastToNewStation(savedStation)
+                        .then(stationRedisRepository.addStationToRedis(savedStation))
+                        .thenReturn(savedStation).doOnSuccess(s ->
+                                log.info("The station {} has been added!", s)
+                        ));
     }
 }

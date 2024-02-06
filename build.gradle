@@ -35,8 +35,6 @@ dependencies {
 
 	implementation "org.flywaydb:flyway-core:$flywayDbVersion"
 	implementation "com.google.code.findbugs:jsr305:$googleFindBugsVersion"
-	implementation "org.mapstruct:mapstruct:$mapStructVersion"
-	annotationProcessor "org.mapstruct:mapstruct-processor:$mapStructVersion"
 
 	//JWT
 	implementation "io.jsonwebtoken:jjwt:$jsonWebTokenVersion"
@@ -59,6 +57,10 @@ dependencies {
 	//API-key RATE LIMITER
 	// https://mvnrepository.com/artifact/com.github.vladimir-bukhtoyarov/bucket4j-core
 	implementation group: 'com.github.vladimir-bukhtoyarov', name: 'bucket4j-core', version: '7.6.0'
+
+	//MAPSTRUCT
+	implementation "org.mapstruct:mapstruct:$mapStructVersion"
+	annotationProcessor "org.mapstruct:mapstruct-processor:$mapStructVersion"
 
 }
 

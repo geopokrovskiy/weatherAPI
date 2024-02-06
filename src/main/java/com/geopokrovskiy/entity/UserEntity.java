@@ -28,6 +28,8 @@ public class UserEntity {
     private LocalDateTime createdAt;
     @Column("updated_at")
     private LocalDateTime updatedAt;
+    @Column("is_blocked")
+    private boolean isBlocked;
     @ToString.Include(name = "password")
     private String maskPassword() {
         return "********";

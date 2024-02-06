@@ -14,7 +14,8 @@ import java.util.List;
 @Data
 @JsonNaming(PropertyNamingStrategies.LowerCamelCaseStrategy.class)
 public class StationDto {
+    @Id
+    private Integer id;
     private String code;
     private String city;
-    private List<ForecastEntity> forecasts;
 }

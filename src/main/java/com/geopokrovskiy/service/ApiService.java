@@ -29,66 +29,16 @@ public class ApiService implements IApiService {
     private static final String SECRET_KEY_INSTANCE = "PBKDF2WithHmacSHA512";
 
     @Override
-    public String generateBasicApiKey(String username) {
-        String rawKey = username + BASIC + apiKeySecret;
+    public String generateApiKey(String username) {
+        String rawKey = username + apiKeySecret;
         return Base64.getEncoder().encodeToString(rawKey.getBytes());
     }
-
     @Override
-    public String generateBasicApiKey(String username, LocalDateTime generatedAt) {
-        return null;
-    }
-
-    @Override
-    public String generateSilverApiKey(String username) {
-        String rawKey = username + SILVER + apiKeySecret;
-        return Base64.getEncoder().encodeToString(rawKey.getBytes());
-    }
-
-    @Override
-    public String generateSilverApiKey(String username, LocalDateTime generatedAt) {
-        return null;
-    }
-
-    @Override
-    public String generateGoldApiKey(String username) {
-        String rawKey = username + GOLD + apiKeySecret;
-        return Base64.getEncoder().encodeToString(rawKey.getBytes());
-    }
-
-    @Override
-    public String generateGoldApiKey(String username, LocalDateTime generatedAt) {
-        return null;
-    }
-
-    @Override
-    public boolean basicMatches(String username, String apiKey) {
-        return this.generateBasicApiKey(username).equals(apiKey);
-    }
-
-    @Override
-    public boolean silverMatches(String username, String apiKey) {
-        return false;
-    }
-
-    @Override
-    public boolean goldMatches(String username, String apiKey) {
-        return false;
-    }
-
-    @Override
-    public Object[] restoreUsernameAndSubscription(String apiKey) {
+    public String restoreUsername(String apiKey) {
         try {
             byte[] decodedKey = Base64.getDecoder().decode(apiKey);
             String rawKey = new String(decodedKey);
-            String usernameAndSubscription = rawKey.substring(0, rawKey.length() - apiKeySecret.length());
-            if (usernameAndSubscription.endsWith("BASIC")) {
-                return new Object[]{usernameAndSubscription.substring(0, usernameAndSubscription.length() - BASIC.length()), Status.BASIC};
-            } else if (usernameAndSubscription.endsWith("SILVER")) {
-                return new Object[]{usernameAndSubscription.substring(0, usernameAndSubscription.length() - SILVER.length()), Status.SILVER};
-            } else if (usernameAndSubscription.endsWith("GOLD")) {
-                return new Object[]{usernameAndSubscription.substring(0, usernameAndSubscription.length() - GOLD.length()), Status.GOLD};
-            } else return new Object[]{null, null};
+            return rawKey.substring(0, rawKey.length() - apiKeySecret.length());
         } catch (Throwable e){
             throw new ApiKeyException("Incorrect API Key", ErrorCodes.INCORRECT_API_KEY);
         }

@@ -1,4 +1,4 @@
-package com.geopokrovskiy.ratelimiter;
+package com.geopokrovskiy.filter;
 
 import com.geopokrovskiy.entity.Status;
 import com.geopokrovskiy.exception.ApiKeyException;

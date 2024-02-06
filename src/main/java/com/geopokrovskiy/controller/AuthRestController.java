@@ -21,24 +21,10 @@ public class AuthRestController {
     private final UserService userService;
     private final UserMapper userMapper;
 
-    @PostMapping("/basic")
+    @PostMapping("/addUser")
     public Mono<UserDto> registerBasicUser(@RequestBody UserDto dto) {
         UserEntity entity = userMapper.map(dto);
-        return userService.registerBasicUser(entity)
-                .map(userMapper::map);
-    }
-
-    @PostMapping("/silver")
-    public Mono<UserDto> registerSilverUser(@RequestBody UserDto dto) {
-        UserEntity entity = userMapper.map(dto);
-        return userService.registerSilverUser(entity)
-                .map(userMapper::map);
-    }
-
-    @PostMapping("/gold")
-    public Mono<UserDto> registerGoldUser(@RequestBody UserDto dto) {
-        UserEntity entity = userMapper.map(dto);
-        return userService.registerGoldUser(entity)
+        return userService.registerUser(entity)
                 .map(userMapper::map);
     }
 
@@ -58,7 +44,7 @@ public class AuthRestController {
     @GetMapping("/get-api-key")
     public Mono<UserDto> getUserInfo(Authentication authentication) {
         CustomPrincipal customPrincipal = (CustomPrincipal) authentication.getPrincipal();
-        return userService.getUserById(customPrincipal.getId())
+        return userService.getUserByUsername(customPrincipal.getUsername())
                 .map(userMapper::map);
     }
 }
